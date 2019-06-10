@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   connect
 } from 'react-redux';
-import * as actions from '../../store/actions/auth';
+import {loginAuth}from '../../store/actions/auth';
 export class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
@@ -11,8 +11,8 @@ export class Login extends Component {
     let password = e.target['password'].value
     // console.log(e.target['username'].value);
     console.log(username,password);
-    this.props.onAuthLogin(username,password)
-    this.props.history.push('/movies')
+    this.props.loginAuth(username,password)
+    // this.props.history.push('/movies')
     
   };
   render() {
@@ -43,9 +43,5 @@ const mapStateToProps = (state) => {
     error: state.error
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    onAuthLogin: (username, password) => dispatch(actions.loginAuth(username, password))
-  }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+
+export default connect(mapStateToProps,{loginAuth})(Login)

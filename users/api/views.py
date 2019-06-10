@@ -31,6 +31,34 @@ class UserCreateAPIView(generics.CreateAPIView):
 
         if serializer_class.is_valid():
             print(registerData)
+            username = registerData['username']
+            email = registerData['email']
+            password = registerData['password']
+
+            print(password)
+            user = User(
+            username = username,
+            email = email
+            )
+
+            user.set_password(password)
+
+            print(user)
+            user.save()
+            profile = UserProfile(
+                user = user,
+                avatar = registerData['avatar'],
+                name = registerData['name'],
+                bio = registerData['bio'],
+                status = "Member",
+                fav_quote = registerData['fav_quote']
+            )
+                # # print(profile)
+            profile.save()
+            return Response({
+                'status': 200,
+                # 'data': response.data
+            })
         else:
             print(serializer_class.errors)
             return Response({
@@ -39,30 +67,7 @@ class UserCreateAPIView(generics.CreateAPIView):
                 # 'data': response.data
             })
             # # response = super().create(request, *args, **kwargs)
-            # username = registerData['username']
-            # email = registerData['email']
-            # password = registerData['password']
-
-            # print(password)
-            # user = User(
-            # username = username,
-            # email = email
-            # )
-
-            # user.set_password(password)
-
-            # print(user)
-            # user.save()
-            # profile = UserProfile(
-            #     user = user,
-            #     avatar = registerData['avatar'],
-            #     name = registerData['name'],
-            #     bio = registerData['bio'],
-            #     status = "Member",
-            #     fav_quote = registerData['fav_quote']
-            # )
-            #     # # print(profile)
-            # profile.save()
+            
             #     # return profile
 
 
