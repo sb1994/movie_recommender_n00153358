@@ -6,6 +6,8 @@ As part of my 4 year degree in Computing, in our final year we were asked to res
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Features](#features)
+* [Fixes](#fixes)
 ## Technologies
 * Django
 * Django Rest Framework
