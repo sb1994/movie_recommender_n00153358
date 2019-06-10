@@ -27,38 +27,43 @@ class UserCreateAPIView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         registerData = request.data
-        print(registerData)
-        # response = super().create(request, *args, **kwargs)
-        username = registerData['username']
-        email = registerData['email']
-        password = registerData['password']
+        serializer_class = UserCreateSerializer(data=request.data)
 
-        print(password)
-        user = User(
-        username = username,
-        email = email
-        )
+        if serializer_class.is_valid():
+            print(registerData)
+        else:
+            print(serializer_class.errors)
+            return Response({
+                'status': 500,
+                'errors': serializer_class.errors,
+                # 'data': response.data
+            })
+            # # response = super().create(request, *args, **kwargs)
+            # username = registerData['username']
+            # email = registerData['email']
+            # password = registerData['password']
 
-        user.set_password(password)
+            # print(password)
+            # user = User(
+            # username = username,
+            # email = email
+            # )
 
-        print(user)
-        user.save()
-        profile = UserProfile(
-            user = user,
-            avatar = registerData['avatar'],
-            name = registerData['name'],
-            bio = registerData['bio'],
-            status = "Member",
-            fav_quote = registerData['fav_quote']
-        )
-            # # print(profile)
-        profile.save()
-            # return profile
-        return Response({
-            'status': 200,
-            'message': 'Testimonials fetched',
-            # 'data': response.data
-        })
+            # user.set_password(password)
+
+            # print(user)
+            # user.save()
+            # profile = UserProfile(
+            #     user = user,
+            #     avatar = registerData['avatar'],
+            #     name = registerData['name'],
+            #     bio = registerData['bio'],
+            #     status = "Member",
+            #     fav_quote = registerData['fav_quote']
+            # )
+            #     # # print(profile)
+            # profile.save()
+            #     # return profile
 
 
 class UserListAPIView(generics.ListAPIView):

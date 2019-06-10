@@ -46,7 +46,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     ),
     validators=[UniqueValidator(
         queryset=User.objects.all(),
-        message='is already been taken by another user'
+        message='username is already been taken by another user'
     )],
     required=True
   )
@@ -63,7 +63,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
       required=True,
       validators=[UniqueValidator(
           queryset=User.objects.all(),
-          message='is already been taken by another user'
+          message='email is already been taken by another user'
       )]
   )
   name = serializers.CharField(
@@ -98,30 +98,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         'status',
         'fav_quote'
     )
-
-  # def create(self, validated_data):
-  #   print(validated_data)
-  #   # profile_data = validated_data.pop('profile', None)
-  #   username = validated_data['username']
-  #   email = validated_data['email']
-  #   password = validated_data['password']
-  #   user = User(
-  #     username = username,
-  #     email = email
-  #   )
-  #   user.set_password(password)
-  #   # user.save()
-  #   profile = UserProfile(
-  #     user = user,
-  #     avatar = validated_data['avatar'],
-  #     name = validated_data['name'],
-  #     status = "Member",
-  #     fav_quote = validated_data['fav_quote']
-  #   )
-    # # print(profile)
-    # profile.save()
-    # return profile
-    # return validated_data
 class UserTokenSerializer(serializers.Serializer):
   username = serializers.CharField(label=_("Username"))
   password = serializers.CharField(

@@ -29,7 +29,10 @@ class Register extends Component {
   handleFileChange = e => {
     if (e.target.files[0]) {
       const avatar = e.target.files[0];
-      this.setState({ avatar });
+      this.setState({ 
+        avatar,
+        avatarURL: URL.createObjectURL(avatar)
+      });
     }
   };
   handleInputChange=e=>{
@@ -49,18 +52,6 @@ class Register extends Component {
       fav_quote,
       name
     }
-    // console.log(registerData);
-    
-    // console.log(registerData)
-    // this.props.onAuthRegister( username,
-    //   password,
-    //   avatar,
-    //   email,
-    //   bio,
-    //   fav_quote,
-    //   name)
-
-    // const { image } = this.state;
     const uploadTask = storage.ref(`avatar/${registerData.avatar.name}`).put(avatar);
     uploadTask.on(
       "state_changed",
@@ -77,20 +68,15 @@ class Register extends Component {
           .child(avatar.name)
           .getDownloadURL()
           .then(url => {
-              let avatar = url
-              // console.log(avatar);
-              console.log(avatar);
-              
-             this.props.registerAuth( registerData.username,
+            let avatar = url
+            this.props.registerAuth( registerData.username,
               registerData.password,
               avatar,
               registerData.email,
               registerData.bio,
               registerData.fav_quote,
-              registerData.name)
-            // this.props.onAuthRegister({
-
-            // })
+              registerData.name
+            )
           })
           .catch(err => {
             console.log(err);
@@ -99,6 +85,7 @@ class Register extends Component {
     );
   };
   render() {
+    const {avatarURL} = this.state
     return (
       <div>
 
@@ -135,6 +122,7 @@ class Register extends Component {
               id="avatar"
               onChange={this.handleFileChange}
             />
+            <img src={avatarURL} alt=""/>
           </div>
           <button className="btn btn-primary" onClick={this.handleSubmit}>
             Register
